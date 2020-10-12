@@ -37,6 +37,10 @@
             width: 20px;
             height: 20px;
             position: absolute;
+            transform: rotate(90deg);
+            /* 0 right; 90 down; 180 left; 270 up */
+            /* transform: scaleX(-1); flip Left/Right */
+            /* transform: scaleY(-1); flip Up/Down */
         }
         /* div.empty{
 
@@ -141,7 +145,8 @@
 
         let pacman = {
             x: 1,
-            y: 1
+            y: 1,
+            t: 0
         };
 
         let score = 0;
@@ -170,6 +175,7 @@
         let displayPacman = () => {
             document.getElementById('pacman').style.left = pacman.x*20+'px';
             document.getElementById('pacman').style.top = pacman.y*20+'px';
+            document.getElementById('pacman').style.transform = `rotate(${pacman.t}deg)`
         }
         let displayScore = () => {
             document.getElementById('score').innerHTML = score;
@@ -187,19 +193,23 @@
                 // pacman.x -= 20;
                 // if(world[pacman.y][pacman.x-1]!==2){
                     pacman.x--;
+                    pacman.t = 180;
                 // }
             }
             else if (e.keyCode === 38 && world[pacman.y-1][pacman.x]!==2){ //up
                 // pacman.y -= 20;
                     pacman.y--;
+                    pacman.t = 270;
             }
             else if (e.keyCode === 39 && world[pacman.y][pacman.x+1]!==2){ //right
                 // pacman.x += 20;
                     pacman.x++;
+                    pacman.t = 0;
             }
             else if (e.keyCode === 40 && world[pacman.y+1][pacman.x]!==2){ //down
                 // pacman.y += 20;
                     pacman.y++;
+                    pacman.t = 90;
             }
             // console.log(pacman); //test
             displayPacman();
