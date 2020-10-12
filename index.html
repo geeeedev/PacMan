@@ -25,9 +25,10 @@
             background-color: blue;
         } 
         div.coin{
-            background: url(./coin.gif);
+            background: url(./coinStatic.png);
             background-repeat: no-repeat;
             background-position: center ;
+            background-size: contain;
         }
         div#pacman{
             background: url(./pacman.gif);
@@ -54,14 +55,14 @@
             left: 320px;
             color: greenyellow;
         }
-        div#cherry{
+        div.cherry{
             /* background-color: red; */
             background: url(./cherry.png);
             background-size: cover;
             width: 20px;
             height: 20px;
-            position: absolute;
-            visibility: hidden;
+            /* position: absolute; */
+            /* visibility: hidden; */
         }
     </style>
 </head>
@@ -131,7 +132,7 @@
         <!-- <div id="pacman" style="top: 20px; left: 20px;"></div> -->
         <div id="pacman"></div>
         <div id="score"></div>
-        <div id="cherry"></div>
+        <!-- <div id="cherry"></div> -->
         
     <script>
         //have JS display world - brick/coin/pacman
@@ -142,6 +143,7 @@
 
         //2=brick 1=coin 0=empty
         let world = [
+          // 0 1 2 3 4 5 6 7 8 91011121314
             [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
             [2,0,2,1,1,1,1,1,2,1,1,1,2,1,2],
             [2,1,1,1,2,2,2,1,1,1,2,1,1,1,2],
@@ -149,7 +151,7 @@
             [2,1,2,1,1,1,2,1,1,2,2,2,1,1,2],
             [2,1,2,2,1,1,1,1,1,1,1,1,1,1,2],
             [2,1,1,1,1,1,2,1,1,2,2,1,2,1,2],
-            [2,1,1,1,1,2,1,0,1,1,1,1,2,2,2],
+            [2,1,1,1,1,2,1,1,1,1,1,1,2,2,2],
             [2,1,2,2,1,1,2,2,2,1,1,1,1,1,2],
             [2,1,1,2,1,1,1,1,1,2,1,2,1,1,2],
             [2,1,1,2,1,2,2,2,1,1,2,1,1,1,2],
@@ -168,8 +170,8 @@
         let score = 0;
 
         let cherry = {
-            x: 0,
-            y: 0
+            x: 1,
+            y: 1
         }
 
         let displayWorld = () =>{
@@ -183,6 +185,9 @@
                     }
                     else if(world[i][j]===1){
                         output += "<div class='coin'></div>";
+                    }
+                    else if(world[i][j]===7){
+                        output += "<div class='cherry'></div>";
                     }
                     else if(world[i][j]===0){
                         output += "<div class='empty'></div>";
@@ -201,16 +206,15 @@
         let displayScore = () => {
             document.getElementById('score').innerHTML = score;
         }
-        let displayCherry = () => {
-            document.getElementById('cherry').style.left = cherry.x+'px';
-            document.getElementById('cherry').style.top = cherry.y+'px';
-            document.getElementById('cherry').style.visibility = 'visible';
-        }
-        let hideCherry = () => {
-            document.getElementById('cherry').style.visibility = 'hidden';
-        }
+        // let displayCherry = () => {
+            // document.getElementsByClassName('cherry').style.left = cherry.x*20+'px';
+            // document.getElementsByClassName('cherry').style.top = cherry.y*20+'px';
+            // document.getElementsByClassName('cherry').style.visibility = 'visible';
+        // }
+        // let hideCherry = () => {
+            // document.getElementsByClassName('cherry').style.visibility = 'hidden';
+        // }
         
-
         displayWorld();
         displayPacman();
         // displayCherry();
@@ -247,18 +251,29 @@
             if (world[pacman.y][pacman.x]===1){
                 world[pacman.y][pacman.x]=0;
                 score += 10;
-                displayWorld();
-                displayScore();
             }
+            else if (world[pacman.y][pacman.x]===7){
+                // console.log(pacman.y, pacman.x, world[pacman.y][pacman.x]); //test
+                world[pacman.y][pacman.x]=0;
+                score += 50;
+            }
+            displayWorld();
+            displayScore();
 
+            // if (score >= 70){  //bad: cherry wont get eaten but stuck
             if (score >= 70 && score < 140){
-                cherry.x = 140;
-                cherry.y = 140;
-                displayCherry();
+                cherry.x = 7;
+                cherry.y = 7;
+                if (world[cherry.y][cherry.x]!==2){
+                    // displayCherry();
+                    world[cherry.y][cherry.x] = 7;
+                }
             }
-            else{
-                hideCherry();
+            else {
+                world[cherry.y][cherry.x] = 0;  //initially world[0][0]
             }
+            displayWorld();
+
         }
 
     </script>
