@@ -43,6 +43,7 @@
         /* 0 right; 90 down; 180 left; 270 up */
         /* transform: scaleX(-1); flip Left/Right */
         /* transform: scaleY(-1); flip Up/Down */
+        visibility: visible;
       }
       /* div.empty{
 
@@ -192,28 +193,51 @@
 
       let displayWorld = () => {
         let output = "";
-        for (let i = 0; i < world.length; i++) {
-          output += "\n<div class='row'>\n";
-          for (let j = 0; j < world[i].length; j++) {
-            // output += world[i][j];  //test
-            if (world[i][j] === 2) {
-              output += "<div class='brick'></div>";
-            } else if (world[i][j] === 1) {
-              output += "<div class='coin'></div>";
-            } else if (world[i][j] === 7) {
-              output += "<div class='cherry'></div>";
-            } else if (world[i][j] === 3) { //3,6,9 ghosts
-              output += "<div class='ghostRed'></div>";
-            } else if (world[i][j] === 0) {
-              output += "<div class='empty'></div>";
+        if (gameOver){
+            for (let i = 0; i < world.length; i++) {
+                output += "\n<div class='row'>\n";
+                for (let j = 0; j < world[i].length; j++) {
+                    // output += world[i][j];  //test
+                    if (world[i][j] === 2) {
+                    output += "<div class='brick'></div>";
+                    } else {
+                    output += "<div class='empty'></div>";
+                    }
+                }
+                output += "\n</div>";
             }
-          }
-          output += "\n</div>";
         }
+        else {
+            for (let i = 0; i < world.length; i++) {
+            output += "\n<div class='row'>\n";
+            for (let j = 0; j < world[i].length; j++) {
+                // output += world[i][j];  //test
+                if (world[i][j] === 2) {
+                output += "<div class='brick'></div>";
+                } else if (world[i][j] === 1) {
+                output += "<div class='coin'></div>";
+                } else if (world[i][j] === 7) {
+                output += "<div class='cherry'></div>";
+                } else if (world[i][j] === 3) { //3,6,9 ghosts
+                output += "<div class='ghostRed'></div>";
+                } else if (world[i][j] === 0) {
+                output += "<div class='empty'></div>";
+                }
+            }
+            output += "\n</div>";
+            }
+        }   
         // console.log(output);  //test
         document.getElementById("world").innerHTML = output;
       };
+
       let displayPacman = () => {
+        if(gameOver){
+            // document.getElementById("pacman").style.visibility = "hidden";
+            pacman.x = 0;
+            pacman.y = 0;
+            pacman.t = 270;
+        }
         document.getElementById("pacman").style.left = pacman.x * 20 + "px";
         document.getElementById("pacman").style.top = pacman.y * 20 + "px";
         document.getElementById("pacman").style.transform = `rotate(${pacman.t}deg)`;
@@ -234,16 +258,12 @@
 
       let displayScore = () => {
         document.getElementById("score").innerHTML = `Score: ${score}`;
-        if (score === 0 && gameOver){
+        if (gameOver){
             document.getElementById("score").innerHTML = `${score} - Game Over! =(`;
         }
       };
 
-      let displayGameOver = () => {
-        if (gameOver){
-            
-        }
-      };
+     
       // learn from mistake
       // let displayCherry = () => {
       //     document.getElementsByClassName('cherry').style.left = cherry.x*20+'px';
@@ -298,6 +318,7 @@
         }
         displayWorld();
         displayScore();
+        displayPacman();
 
         // cherry appears
         // if (score >= 70){  //bad: overrides above action and cherry wont get eaten but stuck
