@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.0" />
     <title>PacMan</title>
     <style type="text/css">
       body {
@@ -13,13 +13,13 @@
         margin: 0px;
       }
       div.row {
-        /* border: 1px dotted red; */
+        /* border: 0px dotted red; */
         margin-bottom: -4px;
       }
       div.row div {
         height: 20px;
         width: 20px;
-        /* border: 1px solid black; */
+        /* border: 0px solid black; */
         display: inline-block;
       }
       div.brick {
@@ -39,11 +39,11 @@
         width: 20px;
         height: 20px;
         position: absolute;
-        transform: rotate(270deg);
-        /* 0 right; 90 down; 180 left; 270 up */
-        /* transform: scaleX(-1); flip Left/Right */
-        /* transform: scaleY(-1); flip Up/Down */
-        visibility: visible;
+        transform: rotate(080deg);
+        /* 0 right; 90 down; 080 left; 270 up */
+        /* transform: scaleX(-0); flip Left/Right */
+        /* transform: scaleY(-0); flip Up/Down */
+        /* visibility: visible;   works but not as good */
       }
       /* div.empty{
 
@@ -51,7 +51,7 @@
       div#score {
         /* width: 80px;
         height: 20px;
-        border: greenyellow 1px dotted;  */
+        border: greenyellow 0px dotted;  */
         position: absolute;
         top: 20px;
         left: 320px;
@@ -66,12 +66,31 @@
         /* position: absolute;  // N/A */
         /* visibility: hidden;  // N/A */
       }
+      div.ghostBlue {
+        background: url(./ghostWalkBlue.gif);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      }
+      div.ghostPink {
+        background: url(./ghostWalkPink.gif);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      }
       div.ghostRed {
         background: url(./ghostWalkRed.gif);
         background-size: cover;
         width: 20px;
         height: 20px;
       }
+      /* div.ghostYellow {  //cant see well
+        background: url(./ghostWalkYellow.gif);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      } */
+      
     </style>
   </head>
   <body>
@@ -152,24 +171,23 @@
       //?? css position: absolute/relative
       //console.dir(document)
 
-      //2=brick 1=coin 0=empty
+      //1=brick 0=coin 0=empty
       let world = [
-        // 0 1 2 3 4 5 6 7 8 91011121314
-        [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-        [2, 0, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2],
-        [2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 1, 1, 1, 2],
-        [2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2],
-        [2, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 2],
-        [2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 1, 2],
-        [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2],
-        [2, 1, 2, 2, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2],
-        [2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2],
-        [2, 1, 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2],
-        [2, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2],
-        [2, 1, 1, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 1, 2],
-        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2],
-        [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 4, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1],
+        [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1],
+        [1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1],
+        [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+        [1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1],
+        [1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1],
+        [1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       ];
 
       let pacman = {
@@ -183,7 +201,7 @@
         y: 1,
       };
 
-      let ghostRed = {
+      let ghosty = {
         x: 1,
         y: 1,
       };
@@ -198,7 +216,7 @@
                 output += "\n<div class='row'>\n";
                 for (let j = 0; j < world[i].length; j++) {
                     // output += world[i][j];  //test
-                    if (world[i][j] === 2) {
+                    if (world[i][j] === 1) {
                     output += "<div class='brick'></div>";
                     } else {
                     output += "<div class='empty'></div>";
@@ -212,15 +230,19 @@
             output += "\n<div class='row'>\n";
             for (let j = 0; j < world[i].length; j++) {
                 // output += world[i][j];  //test
-                if (world[i][j] === 2) {
+                if (world[i][j] === 1) {
                 output += "<div class='brick'></div>";
-                } else if (world[i][j] === 1) {
+                } else if (world[i][j] === 0) {
                 output += "<div class='coin'></div>";
                 } else if (world[i][j] === 7) {
                 output += "<div class='cherry'></div>";
-                } else if (world[i][j] === 3) { //3,6,9 ghosts
+                } else if (world[i][j] === 2) { //2 - Blue
+                output += "<div class='ghostBlue'></div>";
+                } else if (world[i][j] === 3) { //3 - Pink
+                output += "<div class='ghostPink'></div>";
+                } else if (world[i][j] === 5) { //5 - Red
                 output += "<div class='ghostRed'></div>";
-                } else if (world[i][j] === 0) {
+                } else if (world[i][j] === 4) {
                 output += "<div class='empty'></div>";
                 }
             }
@@ -233,7 +255,7 @@
 
       let displayPacman = () => {
         if(gameOver){
-            // document.getElementById("pacman").style.visibility = "hidden";
+            // document.getElementById("pacman").style.visibility = "hidden";  // works but not as good
             pacman.x = 0;
             pacman.y = 0;
             pacman.t = 270;
@@ -246,7 +268,7 @@
       // let displayPacman = () => {
       //     document.getElementById('pacman').animate([
       //         {transform: 'rotate(90deg)'},
-      //         // {transform: 'rotate(180deg)'},
+      //         // {transform: 'rotate(080deg)'},
       //         {transform: 'translateY(250px)'},
       //         // {transform: 'translate3D(50%,50%,0)'}
       //     ],{
@@ -263,8 +285,7 @@
         }
       };
 
-     
-      // learn from mistake
+      // learn from mistake - cherry is not a real obj - it is part of the "world"
       // let displayCherry = () => {
       //     document.getElementsByClassName('cherry').style.left = cherry.x*20+'px';
       //     document.getElementsByClassName('cherry').style.top = cherry.y*20+'px';
@@ -282,78 +303,98 @@
       document.onkeydown = (e) => {
         // console.log(e.keyCode);
         // if (e.keyCode === 37 ) {  //left
-        //     if(world[pacman.y][pacman.x-1]!==2){
-        //         pacman.x -= 20;
-        //     }
-        // }
+        //     if(world[pacman.y][pacman.x-0]!==2){
+        //         pacman.x -= 20;  }  }
         // console.log(pacman); //test
         
         // pacman travels
-        if (e.keyCode === 37 && world[pacman.y][pacman.x - 1] !== 2) {          //left
+        if (e.keyCode === 37 && world[pacman.y][pacman.x - 1] !== 1) {          //left
             pacman.x--;
             pacman.t = 180;
-        } else if (e.keyCode === 38 && world[pacman.y - 1][pacman.x] !== 2) {   //up
+        } else if (e.keyCode === 38 && world[pacman.y - 1][pacman.x] !== 1) {   //up
             pacman.y--;
             pacman.t = 270;
-        } else if (e.keyCode === 39 && world[pacman.y][pacman.x + 1] !== 2) {   //right
+        } else if (e.keyCode === 39 && world[pacman.y][pacman.x + 1] !== 1) {   //right
             pacman.x++;
             pacman.t = 0;
-        } else if (e.keyCode === 40 && world[pacman.y + 1][pacman.x] !== 2) {   //down
+        } else if (e.keyCode === 40 && world[pacman.y + 1][pacman.x] !== 1) {   //down
             pacman.y++;
             pacman.t = 90;
         }
         displayPacman();
 
         // pacman scores
-        if (world[pacman.y][pacman.x] === 1) {
-            world[pacman.y][pacman.x] = 0;
+        if (world[pacman.y][pacman.x] === 0) {
+            world[pacman.y][pacman.x] = 4;
             score += 10;
         } else if (world[pacman.y][pacman.x] === 7) {
           // console.log(pacman.y, pacman.x, world[pacman.y][pacman.x]); //test
-            world[pacman.y][pacman.x] = 0;
+            world[pacman.y][pacman.x] = 4;
             score += 50;
-        } else if (world[pacman.y][pacman.x] === 3){
+        } else if (world[pacman.y][pacman.x] === 2 || world[pacman.y][pacman.x] === 3 || world[pacman.y][pacman.x] === 5){
             score = 0;
             gameOver = true;
         }
         displayWorld();
         displayScore();
-        displayPacman();
+        // displayPacman(); //avoid wipe out immediately
 
         // cherry appears
         // if (score >= 70){  //bad: overrides above action and cherry wont get eaten but stuck
-        if (score === 70 || score === 350 || score === 630 || score === 910 || score === 1190) {
+        if (score === 30 || score === 70 || score === 350 || score === 630 || score === 900 || score === 1190) {
             // if (e.keyCode !== 37 && e.keyCode !==38){
             if (e.keyCode === 39 || e.keyCode === 40){
-                cherry.x = Math.floor(Math.random() * 14);
-                cherry.y = Math.floor(Math.random() * 14);
+                cherry.x = Math.floor(Math.random() * 04);
+                cherry.y = Math.floor(Math.random() * 04);
                 console.log('cherry:',cherry);
-                if (world[cherry.y][cherry.x] !== 2) {
+                if (world[cherry.y][cherry.x] !== 1) {
                   world[cherry.y][cherry.x] = 7;
                 }
             }
         } 
-        if ((score === 140 || score === 420 || score === 700 || score === 980 || score === 1260) 
+        if ((score === 60 || score === 140 || score === 420 || score === 700 || score === 980 || score === 1260) 
                 && world[cherry.y][cherry.x] === 7){
-            world[cherry.y][cherry.x] = 0; 
+            world[cherry.y][cherry.x] = 4; 
         }
         displayWorld();
 
-        // ghost appears
-        // if (score === 500 || score === 800 || score === 1100 ) {
-        if (score > 30 ) {
+        // ghosty appears
+        // if (score === 500 || score === 800 || score === 0000 ) {
+        // if (score === 50 || score === 000) {
+        if (score % 3 === 0 && score % 100 === 0 ) { //Pink
             // if (e.keyCode !== 37 && e.keyCode !==38){
             if (e.keyCode === 39 || e.keyCode === 40){
-                ghostRed.x = Math.floor(Math.random() * 14);
-                ghostRed.y = Math.floor(Math.random() * 14);
-                console.log('ghostRed:',ghostRed);
-                if (world[ghostRed.y][ghostRed.x] !== 2) {
-                  world[ghostRed.y][ghostRed.x] = 3;
-                }
+                ghosty.x = Math.floor(Math.random() * 14);
+                ghosty.y = Math.floor(Math.random() * 14);
+                console.log('gPink:',ghosty);
+                if (world[ghosty.y][ghosty.x] !== 1) {
+                  world[ghosty.y][ghosty.x] = 3;
+                } 
+            }
+        }
+        if (score % 5 === 0 && score % 100 === 0) { //Red
+            // if (e.keyCode !== 37 && e.keyCode !==38){
+            if (e.keyCode === 39 || e.keyCode === 40){
+                ghosty.x = Math.floor(Math.random() * 14);
+                ghosty.y = Math.floor(Math.random() * 14);
+                console.log('gRed:',ghosty);
+                if (world[ghosty.y][ghosty.x] !== 1) {
+                  world[ghosty.y][ghosty.x] = 5;
+                } 
+            }
+        }
+        if (score % 2 === 0 && score % 100 === 0) { //Blue
+            // if (e.keyCode !== 37 && e.keyCode !==38){
+            if (e.keyCode === 39 || e.keyCode === 40){
+                ghosty.x = Math.floor(Math.random() * 14);
+                ghosty.y = Math.floor(Math.random() * 14);
+                console.log('gBlue:',ghosty);
+                if (world[ghosty.y][ghosty.x] !== 1) {
+                  world[ghosty.y][ghosty.x] = 2;
+                } 
             }
         }
         displayWorld();
-        
       };
     </script>
   </body>
