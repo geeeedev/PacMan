@@ -26,7 +26,7 @@
         background-color: blue;
       }
       div.coin {
-        background: url(./coinStatic.png);
+        background: url(./coin.gif);
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
@@ -256,8 +256,8 @@
       let displayPacman = () => {
         if(gameOver){
             // document.getElementById("pacman").style.visibility = "hidden";  // works but not as good
-            pacman.x = 0;
-            pacman.y = 0;
+            pacman.x = 1;
+            pacman.y = 1;
             pacman.t = 270;
         }
         document.getElementById("pacman").style.left = pacman.x * 20 + "px";
@@ -331,7 +331,13 @@
           // console.log(pacman.y, pacman.x, world[pacman.y][pacman.x]); //test
             world[pacman.y][pacman.x] = 4;
             score += 50;
-        } else if (world[pacman.y][pacman.x] === 2 || world[pacman.y][pacman.x] === 3 || world[pacman.y][pacman.x] === 5){
+        } else if (world[pacman.y][pacman.x] === 2 ){ //Blue-100
+            world[pacman.y][pacman.x] = 4;
+            score += 100;
+        } else if (world[pacman.y][pacman.x] === 3 ){ //Pink-300
+            world[pacman.y][pacman.x] = 4;
+            score += 300;
+        } else if (world[pacman.y][pacman.x] === 5){ //Red-0
             score = 0;
             gameOver = true;
         }
