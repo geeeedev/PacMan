@@ -301,6 +301,97 @@
       // }
       // displayCherry();
 
+      let pacmanScores = () =>{
+        // pacman scores
+        if (world[pacman.y][pacman.x] === 0) {        //Coin+10
+            world[pacman.y][pacman.x] = 4;
+            score += 10;
+        } else if (world[pacman.y][pacman.x] === 7) { //Cherry+50
+          // console.log(pacman.y, pacman.x, world[pacman.y][pacman.x]); //test
+            world[pacman.y][pacman.x] = 4;
+            score += 50;
+        } else if (world[pacman.y][pacman.x] === 2 ){ //Blue+200
+            world[pacman.y][pacman.x] = 4;
+            score += 200;
+        } else if (world[pacman.y][pacman.x] === 3 ){ //Pink+300
+            world[pacman.y][pacman.x] = 4;
+            score += 300;
+        } else if (world[pacman.y][pacman.x] === 5){ //Red-0
+            score = 0;
+            gameOver = true;
+        }
+        displayWorld();
+        displayScore();
+        // displayPacman(); //avoid wipe out immediately
+      };
+
+      let cherryAppears = (e) =>{        
+        // cherry appears
+        // if (score >= 70){  //bad: overrides above action and cherry wont get eaten but stuck
+          if (score === 30 || score === 70 || score === 350 || score === 630 || score === 900 || score === 1190) {
+            // if (e.keyCode !== 37 && e.keyCode !==38){
+            if (e.keyCode === 39 || e.keyCode === 40){
+                cherry.x = Math.floor(Math.random() * 14);
+                cherry.y = Math.floor(Math.random() * 14);
+                console.log('cherry:',cherry);
+                if (world[cherry.y][cherry.x] !== 1) {
+                  world[cherry.y][cherry.x] = 7;
+                }
+            }
+        } 
+        // decide to keep cheeries around
+        // if ((score === 60 || score === 140 || score === 420 || score === 700 || score === 980 || score === 1260) 
+        //         && world[cherry.y][cherry.x] === 7){
+        //     world[cherry.y][cherry.x] = 4; 
+        // }
+        displayWorld();
+      }
+
+      let ghostyAppears = (e) => {
+        // ghosty appears
+        if (score % 2 === 0 && score % 100 === 0 && score % 3 !== 0 && score % 200 !== 0) {   //Blue+200
+                ghosty.x = Math.floor(Math.random() * 14);
+                ghosty.y = Math.floor(Math.random() * 14);
+                console.log('gBlue:',score, ghosty);
+                if (world[ghosty.y][ghosty.x] !== 1) {
+                  world[ghosty.y][ghosty.x] = 2;
+                } 
+        }
+        if (score % 3 === 0 && score % 100 === 0 ) {  //Pink+300
+          // if (e.keyCode !== 37 && e.keyCode !==38){
+          // if (e.keyCode === 39 || e.keyCode === 40){
+              ghosty.x = Math.floor(Math.random() * 14);
+              ghosty.y = Math.floor(Math.random() * 14);
+              console.log('gPink:',score, ghosty);
+              if (world[ghosty.y][ghosty.x] !== 1) {
+                world[ghosty.y][ghosty.x] = 3;
+            // } 
+          }
+        }
+        if (score % 55 === 0 ) {  //Red-0
+          if (e.keyCode === 39){
+            ghosty.x = Math.floor(Math.random() * 14);
+            ghosty.y = Math.floor(Math.random() * 14);
+            console.log('gRed:',score, ghosty);
+            if (world[ghosty.y][ghosty.x] !== 1) {
+              world[ghosty.y][ghosty.x] = 5;
+            } 
+          }
+        }
+        
+        if ((score % 100 === 50)   //50,150,250,350,#50...
+                  && world[ghosty.y][ghosty.x] === 2){  
+            world[ghosty.y][ghosty.x] = 4; 
+        }
+        if ((score % 100 === 0 && score % 3 !== 0) 
+                  && (world[ghosty.y][ghosty.x] === 3)){  
+            world[ghosty.y][ghosty.x] = 4; 
+        }
+        displayWorld();
+      }
+
+
+      // Starts
       displayWorld();
       displayPacman();
 
@@ -328,84 +419,87 @@
         }
         displayPacman();
 
-        // pacman scores
-        if (world[pacman.y][pacman.x] === 0) {
-            world[pacman.y][pacman.x] = 4;
-            score += 10;
-        } else if (world[pacman.y][pacman.x] === 7) {
-          // console.log(pacman.y, pacman.x, world[pacman.y][pacman.x]); //test
-            world[pacman.y][pacman.x] = 4;
-            score += 200;
-        } else if (world[pacman.y][pacman.x] === 2 ){ //Blue-100
-            world[pacman.y][pacman.x] = 4;
-            score += 50;
-        } else if (world[pacman.y][pacman.x] === 3 ){ //Pink-300
-            world[pacman.y][pacman.x] = 4;
-            score += 300;
-        } else if (world[pacman.y][pacman.x] === 5){ //Red-0
-            score = 0;
-            gameOver = true;
-        }
-        displayWorld();
-        displayScore();
-        // displayPacman(); //avoid wipe out immediately
+        pacmanScores();
+        // // pacman scores
+        // if (world[pacman.y][pacman.x] === 0) {
+        //     world[pacman.y][pacman.x] = 4;
+        //     score += 10;
+        // } else if (world[pacman.y][pacman.x] === 7) {
+        //   // console.log(pacman.y, pacman.x, world[pacman.y][pacman.x]); //test
+        //     world[pacman.y][pacman.x] = 4;
+        //     score += 200;
+        // } else if (world[pacman.y][pacman.x] === 2 ){ //Blue-100
+        //     world[pacman.y][pacman.x] = 4;
+        //     score += 50;
+        // } else if (world[pacman.y][pacman.x] === 3 ){ //Pink-300
+        //     world[pacman.y][pacman.x] = 4;
+        //     score += 300;
+        // } else if (world[pacman.y][pacman.x] === 5){ //Red-0
+        //     score = 0;
+        //     gameOver = true;
+        // }
+        // displayWorld();
+        // displayScore();
+        // // displayPacman(); //avoid wipe out immediately
 
-        // cherry appears
-        // if (score >= 70){  //bad: overrides above action and cherry wont get eaten but stuck
-        if (score === 30 || score === 70 || score === 350 || score === 630 || score === 900 || score === 1190) {
-            // if (e.keyCode !== 37 && e.keyCode !==38){
-            if (e.keyCode === 39 || e.keyCode === 40){
-                cherry.x = Math.floor(Math.random() * 14);
-                cherry.y = Math.floor(Math.random() * 14);
-                console.log('cherry:',cherry);
-                if (world[cherry.y][cherry.x] !== 1) {
-                  world[cherry.y][cherry.x] = 7;
-                }
-            }
-        } 
-        if ((score === 60 || score === 140 || score === 420 || score === 700 || score === 980 || score === 1260) 
-                && world[cherry.y][cherry.x] === 7){
-            world[cherry.y][cherry.x] = 4; 
-        }
-        displayWorld();
+        cherryAppears(e);
+        // // cherry appears
+        // // if (score >= 70){  //bad: overrides above action and cherry wont get eaten but stuck
+        // if (score === 30 || score === 70 || score === 350 || score === 630 || score === 900 || score === 1190) {
+        //     // if (e.keyCode !== 37 && e.keyCode !==38){
+        //     if (e.keyCode === 39 || e.keyCode === 40){
+        //         cherry.x = Math.floor(Math.random() * 14);
+        //         cherry.y = Math.floor(Math.random() * 14);
+        //         console.log('cherry:',cherry);
+        //         if (world[cherry.y][cherry.x] !== 1) {
+        //           world[cherry.y][cherry.x] = 7;
+        //         }
+        //     }
+        // } 
+        // if ((score === 60 || score === 140 || score === 420 || score === 700 || score === 980 || score === 1260) 
+        //         && world[cherry.y][cherry.x] === 7){
+        //     world[cherry.y][cherry.x] = 4; 
+        // }
+        // displayWorld();
 
-        // ghosty appears
-        // if (score === 500 || score === 800 || score === 0000 ) {
-        // if (score === 50 || score === 000) {
-        if (score % 3 === 0 && score % 100 === 0 ) { //Pink
-            // if (e.keyCode !== 37 && e.keyCode !==38){
-            if (e.keyCode === 39 || e.keyCode === 40){
-                ghosty.x = Math.floor(Math.random() * 14);
-                ghosty.y = Math.floor(Math.random() * 14);
-                console.log('gPink:',ghosty);
-                if (world[ghosty.y][ghosty.x] !== 1) {
-                  world[ghosty.y][ghosty.x] = 3;
-                } 
-            }
-        }
-        if (score % 5 === 0 && score % 100 === 0) { //Red
-            // if (e.keyCode !== 37 && e.keyCode !==38){
-            if (e.keyCode === 39 || e.keyCode === 40){
-                ghosty.x = Math.floor(Math.random() * 14);
-                ghosty.y = Math.floor(Math.random() * 14);
-                console.log('gRed:',ghosty);
-                if (world[ghosty.y][ghosty.x] !== 1) {
-                  world[ghosty.y][ghosty.x] = 5;
-                } 
-            }
-        }
-        if (score % 2 === 0 && score % 100 === 0) { //Blue
-            // if (e.keyCode !== 37 && e.keyCode !==38){
-            if (e.keyCode === 39 || e.keyCode === 40){
-                ghosty.x = Math.floor(Math.random() * 14);
-                ghosty.y = Math.floor(Math.random() * 14);
-                console.log('gBlue:',ghosty);
-                if (world[ghosty.y][ghosty.x] !== 1) {
-                  world[ghosty.y][ghosty.x] = 2;
-                } 
-            }
-        }
-        displayWorld();
+        ghostyAppears(e);
+        // // ghosty appears
+        // // if (score === 500 || score === 800 || score === 0000 ) {
+        // // if (score === 50 || score === 000) {
+        // if (score % 3 === 0 && score % 100 === 0 ) { //Pink
+        //     // if (e.keyCode !== 37 && e.keyCode !==38){
+        //     if (e.keyCode === 39 || e.keyCode === 40){
+        //         ghosty.x = Math.floor(Math.random() * 14);
+        //         ghosty.y = Math.floor(Math.random() * 14);
+        //         console.log('gPink:',ghosty);
+        //         if (world[ghosty.y][ghosty.x] !== 1) {
+        //           world[ghosty.y][ghosty.x] = 3;
+        //         } 
+        //     }
+        // }
+        // if (score % 5 === 0 && score % 100 === 0) { //Red
+        //     // if (e.keyCode !== 37 && e.keyCode !==38){
+        //     if (e.keyCode === 39 || e.keyCode === 40){
+        //         ghosty.x = Math.floor(Math.random() * 14);
+        //         ghosty.y = Math.floor(Math.random() * 14);
+        //         console.log('gRed:',ghosty);
+        //         if (world[ghosty.y][ghosty.x] !== 1) {
+        //           world[ghosty.y][ghosty.x] = 5;
+        //         } 
+        //     }
+        // }
+        // if (score % 2 === 0 && score % 100 === 0) { //Blue
+        //     // if (e.keyCode !== 37 && e.keyCode !==38){
+        //     if (e.keyCode === 39 || e.keyCode === 40){
+        //         ghosty.x = Math.floor(Math.random() * 14);
+        //         ghosty.y = Math.floor(Math.random() * 14);
+        //         console.log('gBlue:',ghosty);
+        //         if (world[ghosty.y][ghosty.x] !== 1) {
+        //           world[ghosty.y][ghosty.x] = 2;
+        //         } 
+        //     }
+        // }
+        // displayWorld();
       };
     </script>
   </body>
