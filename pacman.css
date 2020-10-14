@@ -1,0 +1,84 @@
+      body {
+        background-color: #000000e8;
+        margin: 0px;
+      }
+      div.row {
+        margin-bottom: -4px;
+      }
+      div.row div {
+        height: 20px;
+        width: 20px;
+        display: inline-block;
+      }
+      div.brick {
+        background-color: blue;
+      }
+      div.coin {
+        background: url(./coin.gif);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+      div#pacman {
+        background: url(./pacman.gif);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        transform: rotate(080deg);
+        /* visibility: visible;   works but not as good */
+      }
+      div#score {
+        /* width: 80px;
+        height: 20px;
+        border: greenyellow 1px dotted;  */
+        position: absolute;
+        top: 20px;
+        left: 320px;
+        color: greenyellow;
+      }
+      div#legend {
+        width: 110px;
+        height: 70px;
+        padding: 10px;
+        border: turquoise 1px dotted; 
+        position: absolute;
+        top: 60px;
+        left: 320px;
+        color: turquoise;
+        font-size: x-small;
+        /* white-space: pre-line;  /* ===\n in HTML */
+      }
+      div.cherry {
+        background: url(./cherry.png);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      }
+      div.ghostBlue {
+        background: url(./ghostWalkBlue.gif);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      }
+      div.ghostPink {
+        background: url(./ghostWalkPink.gif);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      }
+      div.ghostRed {
+        background: url(./ghostWalkRed.gif);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      }
+      /* div.ghostYellow {  //cant see well
+        background: url(./ghostWalkYellow.gif);
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+      } */
+      
